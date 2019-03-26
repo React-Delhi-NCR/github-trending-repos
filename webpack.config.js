@@ -1,7 +1,16 @@
 module.exports = {
-  entry: ['./index.js', './index2.js'],
+  entry: ['./index.js'],
   output: {
     filename: 'static/js/bundle.js',
   },
-  mode: 'development'
+  mode: 'development',
+  module: {
+    rules: [
+      // Process JS with Babel.
+      {
+        test   : /\.(js|jsx)$/,
+        loader : 'babel-loader'
+      },
+    ]
+  }
 };
