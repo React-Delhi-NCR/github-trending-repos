@@ -1,3 +1,9 @@
-const b = [1,2,3].map(item => item + 1);
+import React from "react";
+import ReactDom from 'react-dom';
 
-console.log('b', b);
+function Text() {
+  return <h1>Just some text</h1>;
+}
+
+
+ReactDom.render(<Text/>, document.getElementById('root'));
