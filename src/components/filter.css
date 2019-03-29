@@ -1,0 +1,23 @@
+.filter-input {
+  border: 1px solid green;
+  height: 22px;
+  font-size: 14px;
+  padding: 5px;
+  margin-left: 10px;
+}
+.filter-button {
+  padding: 8px 15px;
+  border: 1px solid green;
+  border-radius: 5px;
+  margin-left: 10px;
+  font-size: 14px;
+}
+.filter-select {
+  width: 100px;
+  height: 36px;
+}
+.filter-button:hover {
+  cursor: pointer;
+  background: black;
+  color: white;
+}
