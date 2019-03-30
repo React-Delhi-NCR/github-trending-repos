@@ -1,5 +1,6 @@
 import React from 'react';
 import './filter.css'; // importing external component stylesheet
+import GetRepos from '../utils/getRepos';
 
 class Filter extends React.Component {
     constructor(props) {
@@ -20,15 +21,11 @@ class Filter extends React.Component {
     }
 
     filterTrendingRepos( queryParams ) {
-        //'https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API'
-        // TODO: 1. Move API Call to a common component
-        //       2. Create a State in App.js and update it on response of this API so Trending re-renders
-        return fetch('https://github-trending-api.now.sh/repositories' + queryParams)
-            .then(res => {
-                debugger;
-                res.json()
+        return GetRepos(queryParams)
+            .then(trendingRepos => {
+                this.props.handleFilterChange(trendingRepos);
+                this.setState({ trendingRepos, loading: false })
             })
-            .then(trendingRepos => this.setState({ trendingRepos, loading: false }))
             .catch(err => console.log(err));
     }
 
@@ -45,8 +42,9 @@ class Filter extends React.Component {
     handleSubmit(event) {
         let queryParams = '?since=' + this.state.since;
         if (this.state.language.trim()) {
-            queryParams += 'since=' + this.state.language.trim();
+            queryParams += '&language=' + this.state.language.trim();
         }
+        this.props.showLoader();
         this.filterTrendingRepos(queryParams);
 
         event.preventDefault();

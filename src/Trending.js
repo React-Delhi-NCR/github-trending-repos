@@ -1,23 +1,34 @@
 import React, { Component } from 'react';
 import Loader from './Loader';
 import List from './List';
-
+import GetRepos from './utils/getRepos';
 class Trending extends Component {
     state = {
-        trendingRepos: [],
-        loading: true
+        trendingRepos: this.props.trendingRepos,
+        loading: this.props.loading
     }
 
     fetchTrendingRepos() {
-        //'https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API'
-        return fetch('https://github-trending-api.now.sh/repositories')
-            .then(res => res.json())
-            .then(trendingRepos => this.setState({ trendingRepos, loading: false }))
-            .catch(err => console.log(err));
+        return GetRepos()
+                .then(trendingRepos => {
+                    this.setState({ trendingRepos, loading: false })
+                })
+                .catch(err => console.log(err))
     }
 
     componentDidMount() {
         this.fetchTrendingRepos();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.trendingRepos) {
+            this.setState({
+                trendingRepos: nextProps.trendingRepos
+            })
+        }
+        this.setState({
+            loading: nextProps.loading
+        })
     }
 
     render() {
